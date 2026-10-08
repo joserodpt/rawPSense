@@ -23,6 +23,57 @@ constexpr int kBehaviorReadShift[] = {8, 14};
 // SetGamingFanSpeed / GetGamingFanSpeed fan index
 constexpr quint32 kSpeedIndex[] = {0x1, 0x4};
 
+// Minimal runtime binding to NVML (nvml.dll ships with the NVIDIA driver in System32)
+class Nvml {
+public:
+    ~Nvml()
+    {
+        if (m_shutdown)
+            m_shutdown();
+        if (m_lib)
+            FreeLibrary(m_lib);
+    }
+
+    // GPU core temperature in °C, or -1 if NVML is unavailable
+    int temperature()
+    {
+        if (!m_tried)
+            load();
+        unsigned int temp = 0;
+        if (!m_device || m_getTemperature(m_device, 0 /* NVML_TEMPERATURE_GPU */, &temp) != 0)
+            return -1;
+        return int(temp);
+    }
+
+private:
+    using Init = int (*)();
+    using Shutdown = int (*)();
+    using GetHandle = int (*)(unsigned int, void **);
+    using GetTemperature = int (*)(void *, int, unsigned int *);
+
+    void load()
+    {
+        m_tried = true;
+        m_lib = LoadLibraryExW(L"nvml.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
+        if (!m_lib)
+            return;
+        auto init = reinterpret_cast<Init>(GetProcAddress(m_lib, "nvmlInit_v2"));
+        auto getHandle = reinterpret_cast<GetHandle>(GetProcAddress(m_lib, "nvmlDeviceGetHandleByIndex_v2"));
+        m_getTemperature = reinterpret_cast<GetTemperature>(GetProcAddress(m_lib, "nvmlDeviceGetTemperature"));
+        if (!init || !getHandle || !m_getTemperature || init() != 0)
+            return;
+        m_shutdown = reinterpret_cast<Shutdown>(GetProcAddress(m_lib, "nvmlShutdown"));
+        if (getHandle(0, &m_device) != 0)
+            m_device = nullptr;
+    }
+
+    HMODULE m_lib = nullptr;
+    Shutdown m_shutdown = nullptr;
+    GetTemperature m_getTemperature = nullptr;
+    void *m_device = nullptr;
+    bool m_tried = false;
+};
+
 QString hrText(HRESULT hr)
 {
     return QString("0x%1 %2")
@@ -54,6 +105,13 @@ public:
         Readings r;
         r.cpuTemp = sensor(CpuTemp, 0xFF);
         r.gpuTemp = sensor(GpuTemp, 0xFF);
+        // The EC only knows the dGPU temperature if the NVIDIA driver pushes it over ACPI,
+        // which newer drivers stopped doing, so it reads 0; ask the driver directly instead
+        if (r.gpuTemp <= 0) {
+            const int nv = m_nvml.temperature();
+            if (nv >= 0)
+                r.gpuTemp = nv;
+        }
         r.sysTemp = sensor(SysTemp, 0xFF);
         r.cpuRpm = sensor(CpuFan, 0xFFFF);
         r.gpuRpm = sensor(GpuFan, 0xFFFF);
@@ -247,6 +305,7 @@ private:
     IWbemServices *m_svc = nullptr;
     IWbemClassObject *m_class = nullptr;
     _bstr_t m_path;
+    Nvml m_nvml;
     bool m_comInit = false;
     bool m_ok = false;
 };
