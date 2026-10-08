@@ -1,0 +1,197 @@
+/* rawPSense dark theme */
+
+QWidget {
+    background: #0e1118;
+    color: #e6eaf2;
+}
+
+QToolTip {
+    background: #1c2130;
+    color: #e6eaf2;
+    border: 1px solid #2c3346;
+    padding: 4px;
+}
+
+/* Tray menu */
+QMenu {
+    background: #161a24;
+    border: 1px solid #2c3346;
+    border-radius: 8px;
+    padding: 6px 0;
+}
+QMenu::item {
+    padding: 6px 22px 6px 26px;
+    background: transparent;
+}
+QMenu::item:selected {
+    background: #242a3a;
+    color: #5fe3ff;
+}
+QMenu::item:disabled {
+    color: #4a5266;
+}
+QMenu::separator {
+    height: 1px;
+    background: #2c3346;
+    margin: 5px 10px;
+}
+QMenu::indicator {
+    width: 14px;
+    height: 14px;
+    left: 6px;
+}
+
+/* Cards */
+QFrame#card {
+    background: #161a24;
+    border: 1px solid #242a3a;
+    border-radius: 14px;
+}
+QFrame#card QWidget {
+    background: transparent;
+}
+QFrame#card:disabled {
+    border-color: #1c2130;
+}
+
+QLabel#muted, QLabel#cardTitle {
+    color: #7c859b;
+}
+QLabel#cardTitle {
+    font-size: 8pt;
+    font-weight: 700;
+}
+QLabel#bigValue {
+    font-size: 26pt;
+    font-weight: 700;
+}
+QLabel#midValue {
+    font-size: 13pt;
+    font-weight: 600;
+}
+QLabel[level="warm"] { color: #ffb02e; }
+QLabel[level="hot"]  { color: #ff4d4d; }
+
+/* Temperature bars */
+QProgressBar {
+    background: #242a3a;
+    border: none;
+    border-radius: 3px;
+    max-height: 6px;
+    min-height: 6px;
+}
+QProgressBar::chunk {
+    border-radius: 3px;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #1a6dff, stop:1 #5fe3ff);
+}
+QProgressBar[level="warm"]::chunk {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #ff8a1f, stop:1 #ffd04d);
+}
+QProgressBar[level="hot"]::chunk {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #ff3d3d, stop:1 #ff8a1f);
+}
+
+/* Turbo */
+QPushButton#turbo {
+    background: #1c2130;
+    border: 2px solid #2c3346;
+    border-radius: 14px;
+    color: #c2c9d8;
+    font-size: 18pt;
+    font-weight: 800;
+    padding: 14px;
+}
+QPushButton#turbo:hover {
+    border-color: #5fe3ff;
+}
+QPushButton#turbo:checked {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #ff3d3d, stop:1 #ff8a1f);
+    border-color: #ff7a3d;
+    color: white;
+}
+QPushButton#turbo:checked:hover {
+    border-color: #ffd04d;
+}
+QPushButton#turbo:disabled {
+    color: #4a5266;
+    border-color: #1c2130;
+}
+
+/* Fan mode buttons: smaller versions of the turbo button */
+QPushButton#fanMode {
+    background: #1c2130;
+    border: 2px solid #2c3346;
+    border-radius: 10px;
+    color: #c2c9d8;
+    font-size: 10pt;
+    font-weight: 800;
+    padding: 7px 14px;
+    min-width: 56px;
+}
+QPushButton#fanMode:hover {
+    border-color: #5fe3ff;
+}
+QPushButton#fanMode:checked {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #ff3d3d, stop:1 #ff8a1f);
+    border-color: #ff7a3d;
+    color: white;
+}
+QPushButton#fanMode:checked:hover {
+    border-color: #ffd04d;
+}
+QPushButton#fanMode:disabled {
+    color: #4a5266;
+    border-color: #1c2130;
+}
+
+/* Slider */
+QSlider::groove:horizontal {
+    height: 6px;
+    background: #242a3a;
+    border-radius: 3px;
+}
+QSlider::sub-page:horizontal {
+    border-radius: 3px;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #1a6dff, stop:1 #5fe3ff);
+}
+QSlider::handle:horizontal {
+    background: #e6eaf2;
+    width: 16px;
+    height: 16px;
+    margin: -5px 0;
+    border-radius: 8px;
+}
+QSlider::sub-page:horizontal:disabled {
+    background: #2c3346;
+}
+QSlider::handle:horizontal:disabled {
+    background: #3a4256;
+}
+
+/* Settings */
+QCheckBox {
+    spacing: 10px;
+    font-size: 10pt;
+}
+QCheckBox::indicator {
+    width: 16px;
+    height: 16px;
+    background: #1c2130;
+    border: 2px solid #2c3346;
+    border-radius: 5px;
+}
+QCheckBox::indicator:hover {
+    border-color: #5fe3ff;
+}
+QCheckBox::indicator:checked {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #1a6dff, stop:1 #5fe3ff);
+    border-color: #5fe3ff;
+}
+
+QLabel#status {
+    color: #7c859b;
+    padding: 0 4px;
+}
+QLabel#status[level="hot"] {
+    color: #ff4d4d;
+}

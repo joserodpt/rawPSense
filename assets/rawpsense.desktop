@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=rawPSense
+Comment=Turbo, fan and temperature control for Acer Predator laptops
+Exec=pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY rawPSense
+Icon=rawpsense
+Categories=System;Utility;

@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>style.qss</file>
+        <file alias="icon.png">../assets/rawpsense.png</file>
+    </qresource>
+</RCC>
