@@ -36,10 +36,10 @@ $failed = $false
 try {
     $msys = if ($env:MSYS2_ROOT) { $env:MSYS2_ROOT } else { 'C:\msys64' }
     $bin = Join-Path $msys 'ucrt64\bin'
-    foreach ($tool in 'cmake', 'ninja', 'g++', 'objdump', 'windeployqt-qt5') {
+    foreach ($tool in 'cmake', 'ninja', 'g++', 'objdump', 'windeployqt6') {
         if (-not (Test-Path (Join-Path $bin "$tool.exe"))) {
             throw "$tool not found in $bin. In the MSYS2 UCRT64 shell run:`n" +
-                  "  pacman -S --needed mingw-w64-ucrt-x86_64-{gcc,cmake,ninja,qt5-base,qt5-tools}"
+                  "  pacman -S --needed mingw-w64-ucrt-x86_64-{gcc,cmake,ninja,qt6-base,qt6-tools}"
         }
     }
     $env:PATH = "$bin;$env:PATH"
@@ -81,7 +81,7 @@ try {
     New-Item -ItemType Directory $dist | Out-Null
     Copy-Item build\rawPSense.exe $dist
 
-    Run windeployqt-qt5 --release --no-translations --no-angle --no-opengl-sw --verbose 0 (Join-Path $dist 'rawPSense.exe')
+    Run windeployqt6 --release --no-translations --no-opengl-sw --verbose 0 (Join-Path $dist 'rawPSense.exe')
 
     # windeployqt only copies Qt itself; also copy every MSYS2 DLL that anything in dist imports
     # (libstdc++, zlib, icu, ...), following imports recursively. System DLLs aren't in $bin, so they're skipped.

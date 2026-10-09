@@ -19,9 +19,9 @@ done
 
 if ! command -v cmake >/dev/null || ! command -v c++ >/dev/null; then
     echo "cmake and a C++ compiler are required. Install them with one of:" >&2
-    echo "  sudo apt install build-essential cmake qtbase5-dev    # Debian/Ubuntu" >&2
-    echo "  sudo dnf install gcc-c++ cmake qt5-qtbase-devel     # Fedora" >&2
-    echo "  sudo pacman -S base-devel cmake qt5-base            # Arch" >&2
+    echo "  sudo apt install build-essential cmake qt6-base-dev   # Debian/Ubuntu" >&2
+    echo "  sudo dnf install gcc-c++ cmake qt6-qtbase-devel     # Fedora" >&2
+    echo "  sudo pacman -S base-devel cmake qt6-base            # Arch" >&2
     exit 1
 fi
 

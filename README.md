@@ -1,6 +1,6 @@
 # rawPSense
 
-A minimal PredatorSense replacement for the Acer Predator Helios 300 (PH315-53), built with Qt5.
+A minimal PredatorSense replacement for the Acer Predator Helios 300 (PH315-53), built with Qt6.
 
 - Turbo on/off, **without PredatorSense's battery check**
 - Live CPU / GPU / system temperatures and CPU / GPU fan RPM
@@ -40,7 +40,7 @@ Sensor result: bits 0-7 status (0 = ok), temperature in bits 8-15, RPM in bits 8
 
 1. Install [MSYS2](https://www.msys2.org/), open the **UCRT64** shell and run:
    ```sh
-   pacman -S --needed mingw-w64-ucrt-x86_64-{gcc,cmake,ninja,qt5-base,qt5-tools}
+   pacman -S --needed mingw-w64-ucrt-x86_64-{gcc,cmake,ninja,qt6-base,qt6-tools}
    ```
 2. Double-click `build.cmd`, or run it from cmd / PowerShell:
    ```bat
@@ -54,9 +54,9 @@ Sensor result: bits 0-7 status (0 = ok), temperature in bits 8-15, RPM in bits 8
 ## Build on Linux
 
 ```sh
-sudo apt install build-essential cmake qtbase5-dev    # Debian/Ubuntu
-# sudo dnf install gcc-c++ cmake qt5-qtbase-devel     # Fedora
-# sudo pacman -S base-devel cmake qt5-base            # Arch
+sudo apt install build-essential cmake qt6-base-dev   # Debian/Ubuntu
+# sudo dnf install gcc-c++ cmake qt6-qtbase-devel     # Fedora
+# sudo pacman -S base-devel cmake qt6-base            # Arch
 ./build.sh                 # add --clean for a full rebuild
 sudo ./build/rawPSense
 ```
